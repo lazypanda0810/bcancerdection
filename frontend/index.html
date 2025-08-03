@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breast Cancer Detection - AI Prediction Tool</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            padding: 40px;
+        }
+
+        .form-section {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid #e9ecef;
+        }
+
+        .form-section h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 5px;
+            font-size: 0.9em;
+        }
+
+        .form-group input {
+            padding: 10px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+
+        .preset-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .preset-btn {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background-color 0.3s;
+        }
+
+        .preset-btn:hover {
+            background: #5a6268;
+        }
+
+        .predict-btn {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.2s;
+        }
+
+        .predict-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .predict-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .results-section {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid #e9ecef;
+        }
+
+        .results-section h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .result-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .result-icon {
+            font-size: 4em;
+            margin-bottom: 15px;
+        }
+
+        .benign {
+            color: #28a745;
+        }
+
+        .malignant {
+            color: #dc3545;
+        }
+
+        .result-text {
+            font-size: 1.5em;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .confidence-bar {
+            width: 100%;
+            height: 20px;
+            background: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+
+        .confidence-fill {
+            height: 100%;
+            transition: width 0.5s ease;
+            border-radius: 10px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .info-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #e9ecef;
+        }
+
+        .info-item .label {
+            font-size: 0.9em;
+            color: #6c757d;
+            margin-bottom: 5px;
+        }
+
+        .info-item .value {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #f5c6cb;
+            margin: 15px 0;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 20px;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🩺 Breast Cancer Detection</h1>
+            <p>AI-powered diagnostic tool for breast tumor classification</p>
+        </div>
+
+        <div class="main-content">
+            <div class="form-section">
+                <h2>📋 Patient Data Input</h2>
+                
+                <div class="preset-buttons">
+                    <button class="preset-btn" onclick="loadSampleData('benign')">Load Benign Sample</button>
+                    <button class="preset-btn" onclick="loadSampleData('malignant')">Load Malignant Sample</button>
+                    <button class="preset-btn" onclick="clearForm()">Clear All</button>
+                </div>
+
+                <form id="predictionForm">
+                    <div class="feature-grid" id="featureGrid">
+                        <!-- Features will be populated by JavaScript -->
+                    </div>
+                    
+                    <button type="submit" class="predict-btn" id="predictBtn">
+                        🔍 Analyze & Predict
+                    </button>
+                </form>
+
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p>Analyzing patient data...</p>
+                </div>
+            </div>
+
+            <div class="results-section">
+                <h2>📊 Prediction Results</h2>
+                
+                <div id="noResults" style="text-align: center; color: #6c757d; padding: 40px;">
+                    <div style="font-size: 3em; margin-bottom: 15px;">🤖</div>
+                    <p>Enter patient data and click "Analyze & Predict" to see results</p>
+                </div>
+
+                <div id="results" style="display: none;">
+                    <div class="result-card" id="resultCard">
+                        <div class="result-icon" id="resultIcon">🎯</div>
+                        <div class="result-text" id="resultText">Analyzing...</div>
+                        <div class="confidence-bar">
+                            <div class="confidence-fill" id="confidenceFill"></div>
+                        </div>
+                        <p id="confidenceText">Confidence: 0%</p>
+                    </div>
+
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="label">Probability</div>
+                            <div class="value" id="probabilityValue">0%</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="label">Risk Level</div>
+                            <div class="value" id="riskLevel">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="label">Confidence</div>
+                            <div class="value" id="confidenceValue">0%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="errorMessage" class="error" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Feature names for the breast cancer dataset
+        const featureNames = [
+            'mean_radius', 'mean_texture', 'mean_perimeter', 'mean_area', 'mean_smoothness',
+            'mean_compactness', 'mean_concavity', 'mean_concave_points', 'mean_symmetry', 'mean_fractal_dimension',
+            'se_radius', 'se_texture', 'se_perimeter', 'se_area', 'se_smoothness',
+            'se_compactness', 'se_concavity', 'se_concave_points', 'se_symmetry', 'se_fractal_dimension',
+            'worst_radius', 'worst_texture', 'worst_perimeter', 'worst_area', 'worst_smoothness',
+            'worst_compactness', 'worst_concavity', 'worst_concave_points', 'worst_symmetry', 'worst_fractal_dimension'
+        ];
+
+        // Sample data for testing
+        const sampleData = {
+            benign: [13.54, 14.36, 87.46, 566.3, 0.09779, 0.08129, 0.06664, 0.04781, 0.1885, 0.05766, 0.2699, 0.7886, 2.058, 23.56, 0.008462, 0.0146, 0.02387, 0.01315, 0.0198, 0.0023, 15.11, 19.26, 99.7, 711.2, 0.144, 0.1773, 0.239, 0.1288, 0.2977, 0.07259],
+            malignant: [17.99, 10.38, 122.8, 1001.0, 0.1184, 0.2776, 0.3001, 0.1471, 0.2419, 0.07871, 1.095, 0.9053, 8.589, 153.4, 0.006399, 0.04904, 0.05373, 0.01587, 0.03003, 0.006193, 25.38, 17.33, 184.6, 2019.0, 0.1622, 0.6656, 0.7119, 0.2654, 0.4601, 0.1189]
+        };
+
+        // Initialize the form
+        function initializeForm() {
+            const featureGrid = document.getElementById('featureGrid');
+            
+            featureNames.forEach((feature, index) => {
+                const formGroup = document.createElement('div');
+                formGroup.className = 'form-group';
+                
+                const label = document.createElement('label');
+                label.textContent = feature.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                label.setAttribute('for', `feature_${index}`);
+                
+                const input = document.createElement('input');
+                input.type = 'number';
+                input.step = 'any';
+                input.id = `feature_${index}`;
+                input.name = `feature_${index}`;
+                input.placeholder = '0.0';
+                input.required = true;
+                
+                formGroup.appendChild(label);
+                formGroup.appendChild(input);
+                featureGrid.appendChild(formGroup);
+            });
+        }
+
+        // Load sample data
+        function loadSampleData(type) {
+            const data = sampleData[type];
+            data.forEach((value, index) => {
+                const input = document.getElementById(`feature_${index}`);
+                input.value = value;
+            });
+        }
+
+        // Clear form
+        function clearForm() {
+            featureNames.forEach((_, index) => {
+                const input = document.getElementById(`feature_${index}`);
+                input.value = '';
+            });
+            hideResults();
+        }
+
+        // Hide results
+        function hideResults() {
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('noResults').style.display = 'block';
+            document.getElementById('errorMessage').style.display = 'none';
+        }
+
+        // Show loading
+        function showLoading() {
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('predictBtn').disabled = true;
+        }
+
+        // Hide loading
+        function hideLoading() {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('predictBtn').disabled = false;
+        }
+
+        // Display results
+        function displayResults(data) {
+            const resultsDiv = document.getElementById('results');
+            const noResultsDiv = document.getElementById('noResults');
+            const resultCard = document.getElementById('resultCard');
+            const resultIcon = document.getElementById('resultIcon');
+            const resultText = document.getElementById('resultText');
+            const confidenceFill = document.getElementById('confidenceFill');
+            const confidenceText = document.getElementById('confidenceText');
+            const probabilityValue = document.getElementById('probabilityValue');
+            const riskLevel = document.getElementById('riskLevel');
+            const confidenceValue = document.getElementById('confidenceValue');
+
+            // Show results section
+            resultsDiv.style.display = 'block';
+            noResultsDiv.style.display = 'none';
+
+            // Update result display
+            const isMalignant = data.prediction === 1;
+            const probability = (data.probability * 100).toFixed(1);
+            const confidence = (data.confidence * 100).toFixed(1);
+
+            if (isMalignant) {
+                resultIcon.textContent = '⚠️';
+                resultText.textContent = 'Malignant';
+                resultText.className = 'result-text malignant';
+                confidenceFill.style.background = 'linear-gradient(90deg, #dc3545, #ff6b7a)';
+                resultCard.style.borderLeft = '5px solid #dc3545';
+            } else {
+                resultIcon.textContent = '✅';
+                resultText.textContent = 'Benign';
+                resultText.className = 'result-text benign';
+                confidenceFill.style.background = 'linear-gradient(90deg, #28a745, #20c997)';
+                resultCard.style.borderLeft = '5px solid #28a745';
+            }
+
+            // Update confidence bar
+            confidenceFill.style.width = confidence + '%';
+            confidenceText.textContent = `Confidence: ${confidence}%`;
+
+            // Update info grid
+            probabilityValue.textContent = probability + '%';
+            riskLevel.textContent = data.risk_level;
+            confidenceValue.textContent = confidence + '%';
+        }
+
+        // Show error
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            hideResults();
+        }
+
+        // Handle form submission
+        document.getElementById('predictionForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            showLoading();
+            document.getElementById('errorMessage').style.display = 'none';
+
+            // Collect feature values
+            const features = [];
+            for (let i = 0; i < featureNames.length; i++) {
+                const input = document.getElementById(`feature_${i}`);
+                const value = parseFloat(input.value);
+                if (isNaN(value)) {
+                    hideLoading();
+                    showError(`Please enter a valid number for ${featureNames[i].replace(/_/g, ' ')}`);
+                    return;
+                }
+                features.push(value);
+            }
+
+            try {
+                // Make prediction request
+                const response = await fetch('http://localhost:5000/predict', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ features: features })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    displayResults(data);
+                } else {
+                    showError(data.message || 'Prediction failed');
+                }
+            } catch (error) {
+                showError('Unable to connect to the prediction service. Make sure the Flask backend is running on localhost:5000');
+            }
+
+            hideLoading();
+        });
+
+        // Initialize the form when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeForm();
+        });
+    </script>
+</body>
+</html>

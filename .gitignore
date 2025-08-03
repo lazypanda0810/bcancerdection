@@ -1,0 +1,352 @@
+# Breast Cancer Detection AI - Git Ignore File
+# =============================================
+
+# Python
+# ======
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environments
+# ====================
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.conda/
+conda-env/
+
+# PyInstaller
+# ===========
+*.manifest
+*.spec
+
+# Installer logs
+# ==============
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+# ============================
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Jupyter Notebook
+# ================
+.ipynb_checkpoints
+*.ipynb
+
+# IPython
+# =======
+profile_default/
+ipython_config.py
+
+# PyCharm IDE
+# ===========
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# VS Code
+# =======
+.vscode/
+*.code-workspace
+
+# Spyder IDE
+# ==========
+.spyderproject
+.spyproject
+
+# Rope
+# ====
+.ropeproject
+
+# mkdocs documentation
+# ===================
+/site
+
+# mypy
+# ====
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+# =================
+.pyre/
+
+# pytype static type analyzer
+# ===========================
+.pytype/
+
+# Cython debug symbols
+# ====================
+cython_debug/
+
+# Machine Learning Specific
+# =========================
+
+# Model files (keep trained models in repo, but ignore temp/backup models)
+# Uncomment if you want to ignore all model files:
+# *.pkl
+# *.joblib
+# *.h5
+# *.pb
+# *.onnx
+
+# Temporary model files
+*_temp.pkl
+*_backup.pkl
+*.pkl.bak
+model_*.pkl.temp
+
+# Dataset files (if using local datasets)
+# Uncomment if you're using local data files:
+# *.csv
+# *.xlsx
+# *.json
+# *.parquet
+# data/
+# dataset/
+
+# Training logs and outputs
+logs/
+runs/
+outputs/
+experiments/
+mlruns/
+.mlflow/
+
+# TensorBoard logs
+tensorboard_logs/
+tb_logs/
+
+# Weights and Biases
+wandb/
+
+# DVC (Data Version Control)
+.dvc/
+.dvcignore
+
+# Web Application Specific
+# ========================
+
+# Flask
+instance/
+.webassets-cache
+
+# Streamlit
+.streamlit/
+
+# Node.js (if using any JavaScript tools)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# Frontend build files
+build/
+dist/
+public/build/
+
+# Environment Variables
+# ====================
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.flaskenv
+
+# Configuration files with secrets
+config.ini
+secrets.json
+credentials.json
+
+# Database
+# ========
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+
+# Temporary files
+# ===============
+*.tmp
+*.temp
+*.log
+*.swp
+*.swo
+*~
+
+# OS generated files
+# ==================
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# Archives
+# ========
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Medical Data Privacy
+# ===================
+# IMPORTANT: Never commit real patient data!
+patient_data/
+medical_records/
+health_data/
+phi_data/
+*.dcm
+*.nii
+*.nii.gz
+
+# Large files
+# ===========
+*.large
+*.big
+
+# Backup files
+# ============
+*.bak
+*.backup
+*~
+
+# Documentation builds
+# ====================
+docs/_build/
+site/
+_build/
+
+# Profiling data
+# ==============
+.prof
+
+# Local testing and development
+# =============================
+test_outputs/
+debug/
+scratch/
+playground/
+experiments/
+
+# Security
+# ========
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+
+# IDE and Editor files
+# ===================
+*.sublime-project
+*.sublime-workspace
+.theia/
+
+# Containers
+# ==========
+Dockerfile.local
+docker-compose.override.yml
+.dockerignore.local
+
+# Package managers
+# ================
+Pipfile.lock
+poetry.lock
+pdm.lock
+
+# Static analysis
+# ===============
+.bandit
+.safety
+.semgrep/
+
+# Custom application directories
+# =============================
+user_uploads/
+temp_files/
+cache/
+sessions/
+
+# End of file

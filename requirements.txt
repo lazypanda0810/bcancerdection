@@ -1,0 +1,63 @@
+# Breast Cancer Detection Project - Python Dependencies
+# ====================================================
+# 
+# This file specifies all Python packages required to run the
+# breast cancer detection machine learning project.
+#
+# Installation: pip install -r requirements.txt
+# 
+# Compatible with Python 3.8+
+# Last updated: August 2025
+
+# Core Machine Learning Libraries
+# ===============================
+scikit-learn>=1.2.0,<2.0.0     # Machine learning algorithms and utilities
+numpy>=1.21.0,<2.0.0            # Numerical computing foundation
+pandas>=2.0.0,<3.0.0            # Data manipulation and analysis
+joblib>=1.1.0,<2.0.0            # Efficient serialization for ML models
+
+# Data Visualization Libraries
+# ============================
+matplotlib>=3.5.0,<4.0.0       # Static plotting and charts
+seaborn>=0.11.0,<1.0.0          # Statistical data visualization
+plotly>=5.0.0,<6.0.0            # Interactive visualizations
+
+# Web Framework Dependencies
+# ==========================
+flask>=2.0.0,<4.0.0             # Lightweight web framework for API
+flask-cors>=4.0.0,<5.0.0        # Cross-Origin Resource Sharing support
+streamlit>=1.20.0,<2.0.0        # Interactive web application framework
+
+# HTTP and Request Handling
+# =========================
+requests>=2.28.0,<3.0.0         # HTTP library for API testing
+urllib3>=1.26.0,<3.0.0          # HTTP client library
+
+# Development and Testing
+# ======================
+pytest>=7.0.0,<8.0.0            # Testing framework (optional)
+pytest-cov>=4.0.0,<5.0.0        # Coverage reporting (optional)
+
+# Additional Utilities
+# ===================
+python-dateutil>=2.8.0,<3.0.0   # Date parsing utilities
+pytz>=2022.1                     # Timezone handling
+six>=1.16.0                      # Python 2/3 compatibility utilities
+
+# Optional: Enhanced ML Libraries
+# ===============================  
+# xgboost>=1.6.0,<2.0.0          # Gradient boosting (uncomment if needed)
+# lightgbm>=3.3.0,<4.0.0         # Light gradient boosting (uncomment if needed)
+
+# System and Environment
+# =====================
+wheel>=0.37.0                    # Package building utilities
+setuptools>=65.0.0               # Package installation utilities
+
+# Security and Validation
+# =======================
+certifi>=2022.12.7               # Certificate validation
+charset-normalizer>=2.1.0,<4.0.0 # Character encoding detection
+
+# Note: Version ranges ensure compatibility while allowing updates
+# For production deployment, consider pinning to exact versions
