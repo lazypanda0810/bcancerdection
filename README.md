@@ -59,7 +59,8 @@ setup.bat
 
 #### **Step 1: Clone & Navigate**
 ```bash
-cd "Bcancer dectiion"
+git clone https://github.com/lazypanda0810/bcancerdection.git
+cd bcancerdection
 ```
 
 #### **Step 2: Create Virtual Environment**
